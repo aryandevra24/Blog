@@ -8,7 +8,7 @@ Blogify allows users to create, edit, publish, and manage blog posts with a clea
 
 ## 🚀 Live Demo
 
-soon
+🔗 https://bloging24.netlify.app/
 
 ---
 
