@@ -2,9 +2,11 @@
 import { useEffect, useState } from 'react'
 import appwriteService from '../appwrite/config'
 import { Container, PostCard } from '../components'
+import { useNavigate } from 'react-router'
 
 export default function Home() {
     const [posts, setPosts] = useState([])
+    const navigate=useNavigate()
     useEffect(() => { appwriteService.getPosts().then(p => p && setPosts(p.documents)) }, [])
 
     return (
@@ -17,19 +19,27 @@ export default function Home() {
                     <p className="mt-6 text-xl text-slate-600">
                         Read, write and share your thoughts with the world.
                     </p>
-                    <button className="mt-10 px-8 py-4 rounded-2xl text-white bg-gradient-to-r from-violet-600 to-indigo-600 shadow-lg">
+                    <a href="#posts">
+                    <button className="mt-10 px-8 py-4 rounded-2xl text-white bg-gradient-to-r from-violet-600 to-indigo-600 shadow-lg cursor-pointer">
                         Explore Posts
                     </button>
+                    </a>
                 </div>
             </section>
 
             <Container>
-                <div className="py-16">
+
+                <div className="py-16" id='posts'>
                     <h2 className="text-3xl font-bold mb-8">Latest Posts</h2>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {posts.map(post => <PostCard key={post.$id} {...post} />)}
-                    </div>
+                    {posts.length === 0 ?
+                        <h2 className='text-center bg-yellow-400'>Login or create post to read post</h2>
+                        :
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {posts.map(post => <PostCard key={post.$id} {...post} />)}
+                        </div>
+                    }
                 </div>
+
             </Container>
         </>
     )
